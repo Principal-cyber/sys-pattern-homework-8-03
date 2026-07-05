@@ -1,44 +1,21 @@
-# Домашнее задание к занятию "`Название занятия`" - `Фамилия и имя студента`
+# Домашнее задание к занятию "`Расширенные возможности SQL`" - `Габрусев Михаил`
 
 
-### Инструкция по выполнению домашнего задания
-
-   1. Сделайте `fork` данного репозитория к себе в Github и переименуйте его по названию или номеру занятия, например, https://github.com/имя-вашего-репозитория/git-hw или  https://github.com/имя-вашего-репозитория/7-1-ansible-hw).
-   2. Выполните клонирование данного репозитория к себе на ПК с помощью команды `git clone`.
-   3. Выполните домашнее задание и заполните у себя локально этот файл README.md:
-      - впишите вверху название занятия и вашу фамилию и имя
-      - в каждом задании добавьте решение в требуемом виде (текст/код/скриншоты/ссылка)
-      - для корректного добавления скриншотов воспользуйтесь [инструкцией "Как вставить скриншот в шаблон с решением](https://github.com/netology-code/sys-pattern-homework/blob/main/screen-instruction.md)
-      - при оформлении используйте возможности языка разметки md (коротко об этом можно посмотреть в [инструкции  по MarkDown](https://github.com/netology-code/sys-pattern-homework/blob/main/md-instruction.md))
-   4. После завершения работы над домашним заданием сделайте коммит (`git commit -m "comment"`) и отправьте его на Github (`git push origin`);
-   5. В личном кабинете прикрепите и отправьте ссылку на решение в виде md-файла в вашем Github.
-   6. Любые вопросы по выполнению заданий спрашивайте в разделе “Вопросы по заданию” в личном кабинете.
-   
-Желаем успехов в выполнении домашнего задания!
-   
-### Дополнительные материалы, которые могут быть полезны для выполнения задания
-
-1. [Руководство по оформлению Markdown файлов](https://gist.github.com/Jekins/2bf2d0638163f1294637#Code)
-
----
 
 ### Задание 1
 
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
-
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+SELECT 
+    CONCAT(s.first_name, ' ', s.last_name) AS staff_name,
+    c.city AS city,
+    COUNT(cu.customer_id) AS customer_count
+FROM staff s
+JOIN store st ON s.store_id = st.store_id
+JOIN address a ON st.address_id = a.address_id
+JOIN city c ON a.city_id = c.city_id
+JOIN customer cu ON cu.store_id = st.store_id
+GROUP BY s.staff_id, s.first_name, s.last_name, c.city
+HAVING COUNT(cu.customer_id) > 300;
 ```
 
 `При необходимости прикрепитe сюда скриншоты
@@ -49,21 +26,10 @@
 
 ### Задание 2
 
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
-
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+SELECT COUNT(*) AS films_count
+FROM film
+WHERE length > (SELECT AVG(length) FROM film);
 ```
 
 `При необходимости прикрепитe сюда скриншоты
@@ -74,21 +40,15 @@
 
 ### Задание 3
 
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+SELECT 
+    DATE_FORMAT(p.payment_date, '%Y-%m') AS month,
+    SUM(p.amount) AS total_amount
+FROM payment p
+GROUP BY DATE_FORMAT(p.payment_date, '%Y-%m')
+ORDER BY total_amount DESC
+LIMIT 1;
 ```
 
 `При необходимости прикрепитe сюда скриншоты
@@ -96,22 +56,78 @@
 
 ### Задание 4
 
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
 
 ```
-Поле для вставки кода...
-....
-....
-....
-....
+SELECT 
+    CONCAT(s.first_name, ' ', s.last_name) AS staff_name,
+    COUNT(p.payment_id) AS sales_count,
+    CASE 
+        WHEN COUNT(p.payment_id) >= 8000 THEN 'Да'
+        ELSE 'Нет'
+    END AS Премия
+FROM staff s
+LEFT JOIN payment p ON s.staff_id = p.staff_id
+GROUP BY s.staff_id, s.first_name, s.last_name;
 ```
 
 `При необходимости прикрепитe сюда скриншоты
 ![Название скриншота](ссылка на скриншот)`
+
+
+
+###
+
+```
+SELECT f.film_id, f.title
+FROM film f
+LEFT JOIN inventory i ON f.film_id = i.film_id
+LEFT JOIN rental r ON i.inventory_id = r.inventory_id
+WHERE r.rental_id IS NULL
+GROUP BY f.film_id, f.title;
+```
+
+Результат:
+1	ACADEMY DINOSAUR
+14	ALICE FANTASIA
+33	APOLLO TEEN
+36	ARGONAUTS TOWN
+38	ARK RIDGEMONT
+41	ARSENIC INDEPENDENCE
+87	BOONDOCK BALLROOM
+108	BUTCH PANTHER
+128	CATCH AMISTAD
+144	CHINATOWN GLADIATOR
+148	CHOCOLATE DUCK
+171	COMMANDMENTS EXPRESS
+192	CROSSING DIVORCE
+195	CROWDS TELEMARK
+198	CRYSTAL BREAKING
+217	DAZED PUNK
+221	DELIVERANCE MULHOLLAND
+318	FIREHOUSE VIETNAM
+325	FLOATS GARDEN
+332	FRANKENSTEIN STRANGER
+359	GLADIATOR WESTWARD
+386	GUMP DATE
+404	HATE HANDICAP
+419	HOCUS FRIDA
+495	KENTUCKIAN GIANT
+497	KILL BROTHERHOOD
+607	MUPPET MILE
+642	ORDER BETRAYED
+669	PEARL DESTINY
+671	PERDITION FARGO
+701	PSYCHO SHRUNK
+712	RAIDERS ANTITRUST
+713	RAINBOW SHOCK
+742	ROOF CHAMPION
+801	SISTER FREDDY
+802	SKY MIRACLE
+860	SUICIDES SILENCE
+874	TADPOLE PARK
+909	TREASURE COMMAND
+943	VILLAIN DESPERATE
+950	VOLUME HOUSE
+954	WAKE JAWS
+955	WALLS ARTIST
+
