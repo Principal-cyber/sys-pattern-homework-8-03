@@ -18,9 +18,6 @@ GROUP BY s.staff_id, s.first_name, s.last_name, c.city
 HAVING COUNT(cu.customer_id) > 300;
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 1](ссылка на скриншот 1)`
-
 
 ---
 
@@ -32,8 +29,6 @@ FROM film
 WHERE length > (SELECT AVG(length) FROM film);
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота 2](ссылка на скриншот 2)`
 
 
 ---
@@ -51,8 +46,6 @@ ORDER BY total_amount DESC
 LIMIT 1;
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
 
 ### Задание 4
 
@@ -70,12 +63,10 @@ LEFT JOIN payment p ON s.staff_id = p.staff_id
 GROUP BY s.staff_id, s.first_name, s.last_name;
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
 
 
 
-###
+### Задание 5
 
 ```
 SELECT f.film_id, f.title
@@ -85,8 +76,8 @@ LEFT JOIN rental r ON i.inventory_id = r.inventory_id
 WHERE r.rental_id IS NULL
 GROUP BY f.film_id, f.title;
 ```
-
-Результат:
+```
+Результат задачи 5:
 1	ACADEMY DINOSAUR
 14	ALICE FANTASIA
 33	APOLLO TEEN
@@ -130,4 +121,4 @@ GROUP BY f.film_id, f.title;
 950	VOLUME HOUSE
 954	WAKE JAWS
 955	WALLS ARTIST
-
+```
